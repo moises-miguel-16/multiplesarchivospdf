@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <!-- jQuery library -->
+      <script src="js/jquery.min.js"></script>
+
+      <!-- jsPDF library -->
+      <script src="js/jspdf.min.js"></script>
+</head>
+
+<body>
+    <button onclick="download()" style="cursor: pointer;">PRINT</button>
+    <div id="div"></div>
+    <div id="elementH"></div>
+    <br><br>
+    
+  
+    <script>
+        let contentString
+
+        function download() {
+            console.log('X')
+            var doc = new jsPDF();
+
+            var elementHTML = $('#div').html();
+            console.log(elementHTML)
+            var specialElementHandlers = {
+                '#elementH': function (element, renderer) {
+                    return true;
+                }
+            };
+            doc.fromHTML(elementHTML, 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+
+            // Save the PDF
+            doc.save('sample-document.pdf');
+        }
+        $.get('https://www.uv.es/cerveron/paginasweb/notashtml.html', function (respuesta) {
+            console.log('A')
+            contentString = respuesta
+            document.getElementById('div').innerHTML = contentString;
+
+            //After
+
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>
